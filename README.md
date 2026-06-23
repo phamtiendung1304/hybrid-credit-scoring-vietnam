@@ -555,7 +555,7 @@ The model is designed with awareness of Vietnam's State Bank regulatory framewor
 
 ---
 
-## 14. Citation
+## 13. Citation
 
 If you use this work in your research, please cite:
 
@@ -573,7 +573,7 @@ If you use this work in your research, please cite:
 
 ---
 
-## 15. License
+## 14. License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
