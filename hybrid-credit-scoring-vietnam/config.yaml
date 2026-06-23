@@ -1,0 +1,148 @@
+# ============================================================
+# Hybrid Credit Scoring — Vietnam
+# Central Configuration File
+# ============================================================
+
+project:
+  name: "hybrid-credit-scoring-vietnam"
+  version: "1.0.0"
+  random_seed: 42
+
+# ─────────────────────────────────────────────────────────────
+# Paths
+# ─────────────────────────────────────────────────────────────
+paths:
+  raw_data:       "data/raw"
+  processed_data: "data/processed"
+  external_data:  "data/external"
+  outputs:        "outputs"
+  figures:        "outputs/figures"
+  tables:         "outputs/tables"
+  predictions:    "outputs/predictions"
+  logs:           "logs"
+
+# ─────────────────────────────────────────────────────────────
+# Data Settings
+# ─────────────────────────────────────────────────────────────
+data:
+  target_column: "default_flag"
+  test_size: 0.20
+  val_size: 0.20
+  synthetic_n_samples: 15000
+  default_rate: 0.175          # ~17.5% positive class
+  performance_window_months: 36
+
+# ─────────────────────────────────────────────────────────────
+# Feature Groups
+# ─────────────────────────────────────────────────────────────
+features:
+  bureau_features:
+    - cic_payment_history_score
+    - cic_outstanding_balance_ratio
+    - cic_num_inquiries_6m
+    - cic_account_age_months
+    - cic_num_delinquencies
+    - cic_credit_utilization
+    - cic_num_active_accounts
+
+  behavioral_features:
+    - txn_frequency_30d
+    - txn_frequency_60d
+    - txn_frequency_90d
+    - avg_txn_amount_30d
+    - avg_txn_amount_90d
+    - merchant_category_diversity
+    - digital_payment_regularity
+    - mobile_app_engagement_score
+    - spending_volatility_90d
+    - salary_credit_regularity
+
+  demographic_features:
+    - age_at_application
+    - employment_type_encoded
+    - declared_income_bracket_encoded
+    - education_level_encoded
+
+  iv_threshold: 0.02          # Features with IV < threshold are dropped
+  correlation_threshold: 0.90  # For multicollinearity removal
+
+# ─────────────────────────────────────────────────────────────
+# Model Hyperparameters
+# ─────────────────────────────────────────────────────────────
+models:
+  xgboost:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 5
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    eval_metric: "auc"
+    early_stopping_rounds: 50
+    verbosity: 0
+
+  lightgbm:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_samples: 20
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    verbose: -1
+
+  logistic_regression:
+    C: 1.0
+    max_iter: 1000
+    solver: "lbfgs"
+    class_weight: "balanced"
+
+  random_forest:
+    n_estimators: 300
+    max_depth: 8
+    min_samples_split: 20
+    min_samples_leaf: 10
+    class_weight: "balanced"
+
+# ─────────────────────────────────────────────────────────────
+# Optuna Hyperparameter Search
+# ─────────────────────────────────────────────────────────────
+optuna:
+  n_trials: 100
+  n_jobs: -1
+  cv_folds: 5
+  direction: "maximize"
+  metric: "auc"
+  search_space:
+    n_estimators: [100, 1000]
+    max_depth: [3, 9]
+    learning_rate: [0.005, 0.3]
+    subsample: [0.6, 1.0]
+    colsample_bytree: [0.5, 1.0]
+    min_child_weight: [1, 20]
+    reg_alpha: [0.0, 2.0]
+    reg_lambda: [0.0, 5.0]
+
+# ─────────────────────────────────────────────────────────────
+# Evaluation
+# ─────────────────────────────────────────────────────────────
+evaluation:
+  bootstrap_iterations: 1000
+  confidence_level: 0.95
+  psi_threshold: 0.20          # PSI > 0.20 triggers model review
+  ks_minimum: 0.30             # Minimum acceptable KS for production
+  gini_minimum: 0.40           # Minimum acceptable Gini for production
+
+# ─────────────────────────────────────────────────────────────
+# Visualization
+# ─────────────────────────────────────────────────────────────
+visualization:
+  figure_dpi: 300
+  figure_format: "png"
+  style: "seaborn-v0_8-whitegrid"
+  palette: "Blues_d"
+  figsize_default: [10, 7]
+  figsize_wide: [14, 7]
