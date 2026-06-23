@@ -562,8 +562,6 @@ This project was conducted by undergraduate researchers at the **Faculty of Math
 | Name | Role | Contact |
 |---|---|---|
 | **Phạm Tiến Dũng** | Lead Researcher & Model Architect | [GitHub](https://github.com/[YOUR_USERNAME]) |
-| **Phạm Trường Phát** | Data Engineering & Feature Development | — |
-| **Phạm Thanh Huyền** | Model Evaluation & Business Analysis | — |
 
 **Advisor:** Faculty of Mathematical Economics, NEU Hanoi
 
