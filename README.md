@@ -561,7 +561,7 @@ If you use this work in your research, please cite:
 
 ```bibtex
 @misc{pham2024hybridcredit,
-  author       = {Phạm Tiến Dũng and Phạm Trường Phát and Phạm Thanh Huyền},
+  author       = {Phạm Tiến Dũng},
   title        = {Hybrid Credit Scoring for Gen Z Thin-File Customers in Vietnam:
                   Integrating CIC Bureau Data with Digital Behavioral Signals via XGBoost},
   year         = {2024},
