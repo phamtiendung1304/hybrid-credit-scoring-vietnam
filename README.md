@@ -555,18 +555,6 @@ The model is designed with awareness of Vietnam's State Bank regulatory framewor
 
 ---
 
-## 13. Research Team
-
-This project was conducted by undergraduate researchers at the **Faculty of Mathematics Economics, National Economics University (NEU), Hanoi, Vietnam**.
-
-| Name | Role | Contact |
-|---|---|---|
-| **Phạm Tiến Dũng** | Lead Researcher & Model Architect | [GitHub](https://github.com/[YOUR_USERNAME]) |
-
-**Advisor:** Faculty of Mathematical Economics, NEU Hanoi
-
----
-
 ## 14. Citation
 
 If you use this work in your research, please cite:
